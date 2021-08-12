@@ -5,24 +5,22 @@ import styles from './modal.module.css';
 
 const modalRoot = document.querySelector('#modal');
 const Modal = ({children, onClose}) => {
+  useEffect(() => {
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+      }
+  });
     const  handleKeyDown = e => {
       if (e.code === 'Escape') {
       onClose();
       }
     };
-
     const  handleBackdropClick = e => {
         if (e.currentTarget === e.target) {
           onClose();
         }
     };
-
-    useEffect(() => {
-        window.addEventListener('keydown', handleKeyDown);
-        return () => {
-          window.removeEventListener('keydown', handleKeyDown);
-        }
-    });
 
     return createPortal(
         <div className={styles.Overlay} onClick={handleBackdropClick}>
